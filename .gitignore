@@ -1,0 +1,22 @@
+# Gradle
+.gradle/
+build/
+app/build/
+captures/
+
+# IDE
+.idea/
+*.iml
+.DS_Store
+
+# 本机配置（含 SDK 路径，不上传）
+local.properties
+
+# 签名文件（绝对不能上传！泄露后别人可伪造你的应用更新）
+*.jks
+*.keystore
+keystore.properties
+
+# 日志与临时文件
+*.log
+.cxx/

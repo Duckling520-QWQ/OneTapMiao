@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  ============================================================
+  这个文件是「隐形输入法在系统设置里根本找不到」的头号嫌疑犯。
+  ============================================================
+  很多 ROM（MIUI / ColorOS / OriginOS / 三星 OneUI / 华为 EMUI）在构建
+  「虚拟键盘」列表时，会过滤掉**没有声明任何 subtype** 的输入法。
+  如果 <subtype> 一节缺失或写错，后果是：
+      · 系统输入法列表里压根没有本应用
+      · 你去设置页翻遍也找不到，自然永远勾不上
+      · App 里的状态就一直显示「未启用」
+      · 更隐蔽的是：Shizuku 的 `ime enable` 有些版本还能「成功」，
+        但 `ime set` 会失败，因为系统压根没把它当输入法
+
+  所以哪怕我们这个输入法是「隐形」的、不打算让用户真的拿它打字，
+  也**必须**声明一个 subtype。这是系统识别的前提，不是可选装饰。
+
+  三个关键属性，缺一不可：
+    android:isAuxiliary="false"
+        true 表示这是「辅助输入方式」（手写、语音那种），会被排除在
+        常规键盘列表之外。必须是 false。
+    android:overridesImplicitlyEnabledSubtype="true"
+        让这个 subtype 被显式启用，避免在某些 ROM 上因为语言不匹配
+        而被系统自动禁用，导致输入法显示成「已启用但不可用」。
+    android:imeSubtypeMode="keyboard"
+        标准值，别改。
+-->
+<input-method xmlns:android="http://schemas.android.com/apk/res/android"
+    android:supportsSwitchingToNextInputMethod="true">
+
+    <subtype
+        android:label="OneTapMiao"
+        android:imeSubtypeLocale="zh_CN"
+        android:imeSubtypeMode="keyboard"
+        android:isAuxiliary="false"
+        android:overridesImplicitlyEnabledSubtype="true" />
+
+    <!--
+      如果你的 ROM 在中文环境下依然不显示，再加一条无语言的兜底 subtype：
+      两个都留着，系统只会启用其中一个，不影响使用。
+    <subtype
+        android:label="喵喵注入"
+        android:imeSubtypeMode="keyboard"
+        android:isAuxiliary="false" />
+    -->
+</input-method>

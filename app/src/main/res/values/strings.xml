@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">OneTapMiao</string>
+    <string name="accessibility_service_description">文本改写无障碍服务</string>
+</resources>

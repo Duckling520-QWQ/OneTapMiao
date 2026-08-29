@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  方案改动：悬浮窗从「单个图标」改成「图标 + 喵按钮」横向胶囊。
+
+  布局说明：
+    [ 🐱 图标 56dp ][ 喵 40dp ]
+    点图标 = 切换总开关（关闭时图标半透明）
+    点喵   = 一键加喵（走输入法通道，微信可用）
+    整体拖动 = 移动悬浮窗
+
+  注意：根布局必须是 horizontal，FloatingWindowService.handleTap()
+        用 event.getX() 和 iconView.getRight() 比较来判断点在哪半边。
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="4dp"
+    android:background="@android:color/transparent">
+
+    <ImageView
+        android:id="@+id/floating_icon"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/circle_background"
+        android:src="@mipmap/ic_launcher"
+        android:scaleType="centerCrop"
+        android:contentDescription="悬浮窗图标" />
+
+    <TextView
+        android:id="@+id/btn_miao"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="2dp"
+        android:background="@drawable/miao_button_bg"
+        android:text="喵"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:contentDescription="一键加喵" />
+
+</LinearLayout>

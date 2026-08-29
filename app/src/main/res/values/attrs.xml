@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  为什么需要它：
+    代码里要按 Material3 的按钮层级创建按钮——主操作 filled、次操作 tonal、
+    辅助操作 outlined。filled 用 MaterialButton 默认构造器就行（主题自动给
+    Widget.Material3.Button），但 tonal 和 outlined 需要显式传 defStyleAttr。
+
+    直觉做法是传 ?attr/materialButtonTonalStyle，但那个 attr 我没能在文档里
+    核实一定存在（style 资源 Widget.Material3.Button.TonalButton 确实存在，
+    可"style 存在"不等于"同名 attr 存在"）。一旦不存在就是编译失败，直接卡住。
+
+    所以这里改成自己声明两个 attr，在 themes.xml 里指向已经核实过的 M3 style
+    资源。走 defStyleAttr 机制（View 构造器把 attr 解析成 style 资源再读属性），
+    效果完全一样，但符号是自己项目里的，不存在任何编译风险。
+-->
+<resources>
+    <attr name="catTonalButtonStyle" format="reference" />
+    <attr name="catOutlinedButtonStyle" format="reference" />
+</resources>

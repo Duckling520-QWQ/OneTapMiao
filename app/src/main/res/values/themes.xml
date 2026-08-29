@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material 3 主题，采用柔和的蓝灰色调 -->
+    <style name="Theme.MyApp" parent="Theme.Material3.Light.NoActionBar">
+        <!-- 主色 -->
+        <item name="colorPrimary">#6750A4</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#EADDFF</item>
+        <item name="colorOnPrimaryContainer">#21005D</item>
+        <!-- 次级色 -->
+        <item name="colorSecondary">#625B71</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryContainer">#E8DEF8</item>
+        <item name="colorOnSecondaryContainer">#1D192B</item>
+        <!-- 三级色（可选） -->
+        <item name="colorTertiary">#7D5260</item>
+        <item name="colorOnTertiary">#FFFFFF</item>
+        <item name="colorTertiaryContainer">#FFD8E4</item>
+        <item name="colorOnTertiaryContainer">#31111D</item>
+        <!-- 表面色 -->
+        <item name="colorSurface">#FEF7FF</item>
+        <item name="colorOnSurface">#1D1B20</item>
+        <item name="colorSurfaceVariant">#E7E0EC</item>
+        <item name="colorOnSurfaceVariant">#49454F</item>
+        <!-- 背景色 -->
+        <item name="android:colorBackground">#FEF7FF</item>
+        <item name="colorOnBackground">#1D1B20</item>
+        <!-- 错误色 -->
+        <item name="colorError">#B3261E</item>
+        <item name="colorOnError">#FFFFFF</item>
+
+        <!--
+          按钮层级（本版新增）：
+            filled  = 主操作（保存设置、开启无障碍），用 MaterialButton 默认构造器，
+                      主题会自动套 Widget.Material3.Button，不需要在这里配
+            tonal   = 次操作（添加、开启悬浮窗、测试配置）
+            outlined= 辅助操作（查看诊断日志）
+          样式资源用的是 material 库里的 Widget.Material3.Button.*，已核实存在于 1.12.0
+        -->
+        <item name="catTonalButtonStyle">@style/Widget.Material3.Button.TonalButton</item>
+        <item name="catOutlinedButtonStyle">@style/Widget.Material3.Button.OutlinedButton</item>
+
+        <!-- 形状外观 -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MyApp.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.MyApp.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.MyApp.Large</item>
+    </style>
+
+    <style name="ShapeAppearance.MyApp.Small" parent="ShapeAppearance.Material3.Corner.Small">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+    <style name="ShapeAppearance.MyApp.Medium" parent="ShapeAppearance.Material3.Corner.Medium">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+    <style name="ShapeAppearance.MyApp.Large" parent="ShapeAppearance.Material3.Corner.Large">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+</resources>

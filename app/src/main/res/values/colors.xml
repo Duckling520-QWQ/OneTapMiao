@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="launcher_icon_background">#FFFFFF</color>
+
+    <!-- 主色调：深灰色系 -->
+    <color name="colorPrimary">#333333</color>
+    <color name="colorPrimaryDark">#1A1A1A</color>
+    <color name="colorAccent">#666666</color>
+
+    <!-- 背景色：极浅灰与白色 -->
+    <color name="backgroundLight">#FAFAFA</color>
+    <color name="surfaceWhite">#FFFFFF</color>
+
+    <!-- 文本颜色：黑、深灰、中灰 -->
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#757575</color>
+    <color name="textHint">#9E9E9E</color>
+
+    <!-- 按钮颜色：深灰为主，浅灰辅助 -->
+    <color name="buttonEnabled">#424242</color>
+    <color name="buttonDisabled">#BDBDBD</color>
+    <color name="buttonOrange">#616161</color>
+    <color name="buttonDanger">#757575</color>
+
+    <!-- 分隔线：浅灰 -->
+    <color name="dividerColor">#E0E0E0</color>
+</resources>
