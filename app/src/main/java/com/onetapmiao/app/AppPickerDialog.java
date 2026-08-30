@@ -1,8 +1,11 @@
-package com.example.u7e5f3218e9;
+package com.onetapmiao.app;
+
+import com.onetapmiao.app.R;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -172,8 +175,9 @@ public final class AppPickerDialog {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        // 用户可能已经把对话框关了，别再往已关闭的界面上刷
-                        if (dialog == null || !dialog.isShowing() || activity.isFinishing()) {
+                        // 用户可能已经把对话框关了，别再往已关闭/已销毁的界面上刷
+                        if (dialog == null || !dialog.isShowing() || activity.isFinishing()
+                                || (Build.VERSION.SDK_INT >= 17 && activity.isDestroyed())) {
                             return;
                         }
                         allApps = apps;

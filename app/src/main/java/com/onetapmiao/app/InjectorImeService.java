@@ -1,4 +1,6 @@
-package com.example.u7e5f3218e9;
+package com.onetapmiao.app;
+
+import com.onetapmiao.app.R;
 
 import android.inputmethodservice.InputMethodService;
 import android.view.View;

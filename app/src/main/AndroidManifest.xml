@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- minSdk 与 build.gradle 保持一致（24）；实际生效的是 gradle 里的值，
+         这里同步修改仅为避免排查时被误导 -->
     <uses-sdk
-        android:minSdkVersion="23"
+        android:minSdkVersion="24"
         android:targetSdkVersion="34" />
 
     <!-- 无障碍服务权限 -->
@@ -17,6 +19,8 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- 忽略电池优化：不加这个权限，ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS 会被系统拒绝 -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <!-- v1.1：加喵成功振动反馈（普通权限，安装即授权，无需动态申请） -->
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <!-- 应用可见性声明（Android 11 / targetSdk 30 起必需）：
          应用选择器用 PackageManager 查询「有桌面入口的应用」，
@@ -64,6 +68,12 @@
             </intent-filter>
         </activity>
 
+        <!-- v1.1：悬浮窗外观设置（大小/透明度/贴边/恢复默认位置） -->
+        <activity
+            android:name=".FloatSettingsActivity"
+            android:exported="false" />
+
+
         <service
             android:name=".QQAccessibilityService"
             android:exported="true"
@@ -95,8 +105,9 @@
             android:name=".MiaoActionReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.example.u7e5f3218e9.ACTION_APPEND_MIAO" />
-                <action android:name="com.example.u7e5f3218e9.ACTION_READ_INPUT" />
+                <action android:name="com.onetapmiao.app.ACTION_APPEND_MIAO" />
+                <action android:name="com.onetapmiao.app.ACTION_READ_INPUT" />
+                <action android:name="com.onetapmiao.app.ACTION_TOGGLE_PROCESSING" />
             </intent-filter>
         </receiver>
 

@@ -1,4 +1,4 @@
-package com.example.u7e5f3218e9;
+package com.onetapmiao.app;
 
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Context;

@@ -3,15 +3,15 @@ plugins {
 }
 
 android {
-    namespace 'com.example.u7e5f3218e9'
+    namespace 'com.onetapmiao.app'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.u7e5f3218e9"
+        applicationId "com.onetapmiao.app"
         minSdk 24          
         targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1.0"
     }
 
     buildTypes {
@@ -24,11 +24,16 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        // 源码统一按 UTF-8 编译：防止手机 IDE 默认编码（GBK 等）把中文字符串编译成乱码
+        encoding 'UTF-8'
     }
 }
 
 dependencies {
     implementation 'com.google.android.material:material:1.12.0'
+    // MaterialAlertDialogBuilder 继承 androidx.appcompat.app.AlertDialog.Builder，
+    // 虽然 material 库会传递依赖 appcompat，但显式声明可避免被其他依赖 exclude 后编译失败
+    implementation 'androidx.appcompat:appcompat:1.6.1'
 
     // Shizuku：api 提供调用能力，provider 会让 ShizukuProvider 自动合并进 Manifest（无需手改清单）
     def shizuku_version = "13.1.5"

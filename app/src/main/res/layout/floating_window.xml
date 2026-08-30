@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  方案改动：悬浮窗从「单个图标」改成「图标 + 喵按钮」横向胶囊。
+  悬浮窗：状态圆点 + 图标 + 喵按钮 横向胶囊。
 
   布局说明：
-    [ 🐱 图标 56dp ][ 喵 40dp ]
-    点图标 = 切换总开关（关闭时图标半透明）
+    [ ● 状态点 10dp ][ 🐱 图标 56dp ][ 喵 40dp ]
+    ● 状态点：绿 = 文本改写中，灰 = 已暂停（与用户设置的透明度解耦，任何透明度下都看得清）
+    点图标（含状态点一侧） = 切换总开关
     点喵   = 一键加喵（走输入法通道，微信可用）
     整体拖动 = 移动悬浮窗
 
@@ -18,6 +19,15 @@
     android:gravity="center_vertical"
     android:padding="4dp"
     android:background="@android:color/transparent">
+
+    <!-- v1.1.1：改写状态圆点（绿=开 / 灰=暂停），颜色由服务更新 -->
+    <View
+        android:id="@+id/status_dot"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginEnd="3dp"
+        android:background="@drawable/circle_background"
+        android:contentDescription="改写状态" />
 
     <ImageView
         android:id="@+id/floating_icon"

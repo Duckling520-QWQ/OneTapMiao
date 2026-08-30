@@ -1,4 +1,4 @@
-package com.example.u7e5f3218e9;
+package com.onetapmiao.app;
 
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
@@ -1715,8 +1715,14 @@ public class QQAccessibilityService extends AccessibilityService {
     public void onServiceConnected() {
         super.onServiceConnected();
 
-        AccessibilityServiceInfo info = new AccessibilityServiceInfo();
-        info.eventTypes =
+        // 关键：必须以 XML 配置（getServiceInfo）为基础叠加，
+        // 不能 new 一个空对象整体覆盖——那样会丢掉 FLAG_RETRIEVE_INTERACTIVE_WINDOWS，
+        // 导致 getRootInActiveWindow() 恒返回 null，全自动加喵完全失效。
+        AccessibilityServiceInfo info = getServiceInfo();
+        if (info == null) {
+            info = new AccessibilityServiceInfo();
+        }
+        info.eventTypes |=
                 AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
                         | AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED
                         | AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED
@@ -1724,9 +1730,10 @@ public class QQAccessibilityService extends AccessibilityService {
                         | AccessibilityEvent.TYPE_VIEW_FOCUSED;  // [优化] 键盘聚焦时补一次查找
 
         info.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC;
-        info.flags =
+        info.flags |=
                 AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS
-                        | AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS;
+                        | AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS
+                        | AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;
 
         info.notificationTimeout = 50;
         setServiceInfo(info);

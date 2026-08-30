@@ -1,4 +1,4 @@
-package com.example.u7e5f3218e9;
+package com.onetapmiao.app;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,12 +42,12 @@ public final class ShizukuInjector {
     private static final String TAG = "ShizukuInjector";
 
     // ---- 输入法 ID ----
-    // 以前这里写死成 "com.example.u7e5f3218e9/.InjectorImeService"。
+    // 以前这里写死成 "com.onetapmiao.app/.InjectorImeService"。
     // 一旦 build.gradle 里的 applicationId 和这个常量不一致（改过包名、
     // 或者用别的环境打包时 applicationId 带后缀），ime enable / ime set
     // 就会去操作一个根本不存在的组件，全部失败，而且报错看着还像权限问题。
     // 改成运行时按真实包名拼，没设置过就退回原来的默认值兜底。
-    private static final String IME_ID_FALLBACK = "com.example.u7e5f3218e9/.InjectorImeService";
+    private static final String IME_ID_FALLBACK = "com.onetapmiao.app/.InjectorImeService";
     private static final String IME_CLASS_SIMPLE = "InjectorImeService";
     private static volatile String sImeId = null;
 
@@ -725,10 +726,14 @@ public final class ShizukuInjector {
             return;
         }
         try {
-            byte[] buf = new byte[4096];
+            // 必须走 Reader 逐字符解码：直接按字节块 new String(buf,0,n,"UTF-8") 时，
+            // 若 4096 字节的块边界正好切在中文（UTF-8 三字节）中间，
+            // 这块末尾和下一块开头会各自解出半个序列，日志里就成了乱码。
+            InputStreamReader reader = new InputStreamReader(in, "UTF-8");
+            char[] buf = new char[4096];
             int n;
-            while ((n = in.read(buf)) > 0) {
-                sb.append(new String(buf, 0, n, "UTF-8"));
+            while ((n = reader.read(buf)) > 0) {
+                sb.append(buf, 0, n);
             }
         } catch (Throwable ignored) {
         }

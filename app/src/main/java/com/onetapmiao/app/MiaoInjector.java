@@ -1,4 +1,6 @@
-package com.example.u7e5f3218e9;
+package com.onetapmiao.app;
+
+import com.onetapmiao.app.R;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -27,7 +29,7 @@ import rikka.shizuku.Shizuku;
  *
  * 【本版改动】
  *   上一版的 isImeEnabled() 只做了一件事：读 Settings.Secure.ENABLED_INPUT_METHODS，
- *   然后硬编码判断字符串里有没有 "com.example.u7e5f3218e9/.InjectorImeService"。
+ *   然后硬编码判断字符串里有没有 "com.onetapmiao.app/.InjectorImeService"。
  *   这个判断太脆，任何一个环节对不上就永远是「未启用」，而且你完全看不出是哪一环断了：
  *     - 包名写死，一旦改 applicationId 就失效；
  *     - 只认短名格式（pkg/.Cls），不认完全限定名（pkg/pkg.Cls）；
@@ -322,8 +324,8 @@ public final class MiaoInjector {
 
     /**
      * id 匹配：同时兼容
-     *   com.example.u7e5f3218e9/.InjectorImeService        （短名，系统存储用这个）
-     *   com.example.u7e5f3218e9/com.example.u7e5f3218e9.InjectorImeService （完全限定名）
+     *   com.onetapmiao.app/.InjectorImeService        （短名，系统存储用这个）
+     *   com.onetapmiao.app/com.onetapmiao.app.InjectorImeService （完全限定名）
      */
     private static boolean matchIme(String id, String pkg) {
         if (id == null || id.isEmpty()) {
@@ -582,7 +584,10 @@ public final class MiaoInjector {
             int code;
             try {
                 code = p.exitValue();
-            } catch (IllegalThreadStateException e) {
+            } catch (IllegalArgumentException e) {
+                // 进程尚未退出：标准实现抛 IllegalThreadStateException，
+                // Shizuku 的 Process 则抛其父类 IllegalArgumentException。
+                // 这里抓父类，两种都覆盖到，否则超时会被误报成「执行异常」。
                 code = done ? -1 : -2;   // -2 = 超时
             }
             String out = sb.toString().trim();
@@ -629,6 +634,14 @@ public final class MiaoInjector {
                 try {
                     FloatingWindowService.showResult(msg, ok);
                 } catch (Throwable ignored) {
+                }
+                // v1.1：成功时轻微振动一下（用户可在设置里关掉；失败不震，
+                //       因为失败要专心读原因，震动只会添乱）
+                if (ok) {
+                    try {
+                        VibratorHelper.vibrateIfEnabled(app);
+                    } catch (Throwable ignored) {
+                    }
                 }
                 // 2. Toast（前台时可见）
                 try {
